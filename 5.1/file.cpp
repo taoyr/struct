@@ -1,8 +1,8 @@
 #include <iostream>
 #include<string>
 using namespace std;
-class file{
 
+class file{
 	public:
 	typedef struct Node{                   //a node of a tree
           	 string data;
@@ -10,7 +10,14 @@ class file{
         }Node,*Tree;
 
         public:
-	Node *CreateInitFS{		//initial a file system
+	Node *CreateInitFS();
+	char *FileterPath(char A[],const int k);
+	void DeleteNode(string B[],Node *L,int PathNum);
+	void Free(Node *p);
+	int RecursionDelete(Node *p);			
+	void AddNode(Node *L,string B[],string D,int PathNum);
+}
+	Node *file::CreateInitFS(){		//initial a file system
    		Node *p,*q;
 		Tree L;
 		L=new(Node);
@@ -40,7 +47,7 @@ class file{
 		return L;	
 	}
 
-	char *FilterPath(char A[],const int k){		//filter the path to a number of node
+	char *file::FilterPath(char A[],const int k){		//filter the path to a number of node
 		int i=0,j=0;
 		int m=0,n=0;
 		int p=1,q=0;
@@ -79,14 +86,9 @@ class file{
 		return B;	
 	}
 
-	DeleteNode(char B[],Node *L){		//delete a directory
-		int i,PathNum=0;
+	file::DeleteNode(string B[],Node *L,int PathNum){		//delete a directory
+		int i;
 		Node *p,*q,*r;
-		for(i=0;i<50;i++){
-			if(B[i]!=0){
-				PathNum=PathNum+1;
-			}
-		}
 		p=L->ch1;
 		q=L->ch2;
 		for(i=0;i<(PathNum-1);i++){
@@ -110,11 +112,11 @@ class file{
 		}
 	}
 
-	Free(Node *p){
+	file::Free(Node *p){
 		delete p;
 	}			 
 
-	Status RecursionDelete(Node *p;){
+	Status file::RecursionDelete(Node *p){
 		if((p->ch1==0)&&(p->ch2)==0){
 			Free p;
 		}
@@ -123,9 +125,9 @@ class file{
 		return 1;
 	}
 
-	AddNode(Node *L;string B[];string D,int PathNum){
+	file::AddNode(Node *L,string B[],string D,int PathNum){
 		int i=0;
-                Node *p,*q,*r;
+                Node *p,*q;
                 p=L->ch1;
                 q=L->ch2;
                 for(i=0;i<(PathNum-1);i++){
@@ -139,17 +141,34 @@ class file{
                       }
                 }
 		if(B[i]=p->data){
-			r=new(Node);
+			*r=new(Node);
 			r->data=D;
 			p->ch1=r;
 		}
 		if(B[i]=q->data){
-			r=new(Node);
+			*r=new(Node);
 			r->data=D;
 			q->ch1=r;
 		}
 	}	
-}
+	file::OutputTree(Node *L){
+		Node *p,*q;
+		p=L;
+//		p=L->ch1;
+//		q=L->ch2;
+//		int i=0;
+//		for(i=0;i<100<i++){
+//			if
+//			p=L->ch1;
+//			p=L->ch2;
+		if((p->ch1==0)&&(p->ch2)==0){
+			cout<<p->data<<' ';
+			cout<<endl;
+		}
+		if(RecursionDelete(p->ch1))
+		if(RecursionDelete(p->ch2))
+		return 1;
+	}			
 
 main(){
 	typedef struct Node{
@@ -162,6 +181,7 @@ main(){
 	string *B;
 	int CharNum=50;
 	int i,j=0;
+	file FS;
 	L=file.CreateInitFS();
 	cout<<"If you want to add a derectory,please input A.\nIf you want to delete a derectory,please input D."<<endl;
 	cin>>C;
@@ -172,11 +192,12 @@ main(){
 			j=j+1;
 		}
 	}
-	B=file.FilterPath(A,j);
+	B=FS.FilterPath(A,j);
 	if(C=='A'){
-		file.AddNode(L,B,B[j]);
+		FS.AddNode(L,B,B[j]);
 	}
 	if(C=='D'){
-		file.DeleteNode(B,L);
+		FS.DeleteNode(B,L);
 	}	
+	FS.OutputTree(L);
 }	
